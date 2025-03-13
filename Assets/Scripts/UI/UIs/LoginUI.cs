@@ -11,19 +11,36 @@ public class LoginUI : UIBase
     {
         // 开始游戏
         Register("start").onClick = onStartGameBtn;
-        // ...
+        // 继续游戏
+        Register("continue").onClick = onContinueBtn;
+        // 设置
+        Register("settings").onClick = onSettingsBtn;
+        // 退出游戏
+        Register("quit").onClick = onQuitBtn;
     }
 
-    private void onStartGameBtn(GameObject obj, PointerEventData pData)
+    private void onStartGameBtn(GameObject @object, PointerEventData data)
     {
-        // 进入...
-        UIManager.Instance.ShowUI<NextUI_test_1>("NextUI_test_1");
-
-        // 关闭
+        BGManager.Instance.ShowBG("StartBG");
         Close();
+    }
 
-        // 测试
-        // UIManager.Instance.ShowTip("nihao", Color.green);
-        // UIManager.Instance.ShowDialogs("nihao0000");
+    private void onContinueBtn(GameObject @object, PointerEventData data)
+    {
+        Close();
+    }
+
+    private void onSettingsBtn(GameObject @object, PointerEventData data)
+    {
+        UIManager.Instance.ShowUI<SettingsUI>("SettingsUI");
+    }
+
+    private void onQuitBtn(GameObject @object, PointerEventData data)
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
