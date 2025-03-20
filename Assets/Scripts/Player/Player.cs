@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class Player : MonoBehaviour
 {
+    public float smoothSpeed = 0.0125f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +20,19 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-        CameraFollow();
+        
         CheckESC();
+    }
+
+    private void LateUpdate()
+    {
+        CameraFollow();
     }
 
     private void Move()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveZ = Input.GetAxisRaw("Vertical");
 
         Vector3 MoveDirection = new Vector3(moveX, 0f, moveZ).normalized;
 
@@ -34,7 +41,9 @@ public class Player : MonoBehaviour
 
     private void CameraFollow()
     {
-        Camera.main.transform.position = new Vector3(transform.position.x, 1.5f, 3f);
+        Vector3 desiredPosition= new Vector3(this.transform.position.x, 1.5f,3f);
+            Vector3 smoothedPosition = Vector3.Lerp(Camera.main.transform.position, desiredPosition, smoothSpeed);
+        Camera.main.transform.position = smoothedPosition;
     }
 
     private void CheckESC()
