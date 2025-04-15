@@ -32,12 +32,12 @@ public class UIEventTrigger : MonoBehaviour, IPointerClickHandler, IPointerEnter
             {
                 // 恢复按钮大小
                 transform.DOScale(new Vector3(1, 1, 1), 0.1f)
-                .OnComplete(() =>
-                {
-                    // 执行事件
-                    onClick?.Invoke(gameObject, eventData);
-                });
-            });
+                    .OnComplete(() =>
+                    {
+                        // 执行事件
+                        onClick?.Invoke(gameObject, eventData);
+                    }).SetUpdate(true);
+            }).SetUpdate(true);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

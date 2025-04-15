@@ -28,25 +28,39 @@ public class UIBase : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // 关闭界面（销毁）
+    // 关闭（销毁）
     public virtual void Close()
     {
         UIManager.Instance.CloseUI(gameObject.name);
+    }
+    
+    // 隐藏子UI
+    public void HideIncludeUI(string uiName)
+    {
+        Transform tf = transform.Find(uiName);
+        tf.gameObject.SetActive(false);
+    }
+    
+    // 显示子UI
+    public void ShowIncludeUI(string uiName)
+    {
+        Transform tf = transform.Find(uiName);
+        tf.gameObject.SetActive(true);
     }
 
     // 打开动画
     public void OpenEffect()
     {
         transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+        transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     // 关闭动画
-    public void CloseEffect()
-    {
+    public void CloseEffect(Action callback)
+    { 
         transform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
-            Close();
-        });
+            callback?.Invoke();
+        }).SetUpdate(true);
     }
 }

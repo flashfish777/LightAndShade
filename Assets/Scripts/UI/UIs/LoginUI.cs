@@ -21,7 +21,8 @@ public class LoginUI : UIBase
 
     private void onStartGameBtn(GameObject @object, PointerEventData data)
     {
-        BGManager.Instance.ShowBG("StartBG");
+        UIManager.Instance.ShowUI<GameUI>("GameUI");
+        GameManager.Instance.ChangeLevel(Level.Start);
         Close();
     }
 

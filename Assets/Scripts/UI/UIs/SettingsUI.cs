@@ -12,8 +12,24 @@ public class SettingsUI : UIBase
         Register("bg/close").onClick = onCloseBtn;
     }
 
+    public override void Show()
+    {
+        base.Show();
+        OpenEffect();
+    }
+
+    public override void Hide()
+    {
+        CloseEffect(base.Hide);
+    }
+
+    public override void Close()
+    {
+        CloseEffect(base.Close);
+    }
+
     private void onCloseBtn(GameObject @object, PointerEventData data)
     {
-        Close();
+        Hide();
     }
 }
