@@ -133,7 +133,17 @@ public class LightController : MonoBehaviour
                 // 处理折射
                 else if (reflectionsLeft > 0 && hit.collider.CompareTag("Refraction"))
                 {
-                    
+                    // 计算折射方向
+                    ResponsiveGas gasZone = hit.collider.gameObject.GetComponent<ResponsiveGas>();
+                    if (gasZone != null)
+                    {
+                        Vector3 refractDir = gasZone.CalculateRefraction(ray.direction, hit.normal);
+                        if (refractDir != Vector3.zero)
+                        {
+                            ray = new Ray(hit.point, refractDir);
+                            reflectionsLeft--;
+                        }
+                    }
                 }
                 else
                 {
