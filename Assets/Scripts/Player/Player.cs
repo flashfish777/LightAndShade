@@ -20,8 +20,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-        
-        CheckESC();
     }
 
     private void LateUpdate()
@@ -42,15 +40,12 @@ public class Player : MonoBehaviour
     private void CameraFollow()
     {
         Vector3 desiredPosition= new Vector3(this.transform.position.x, 1.5f,3f);
-            Vector3 smoothedPosition = Vector3.Lerp(Camera.main.transform.position, desiredPosition, smoothSpeed);
+        Vector3 smoothedPosition = Vector3.Lerp(Camera.main.transform.position, desiredPosition, smoothSpeed);
         Camera.main.transform.position = smoothedPosition;
     }
 
-    private void CheckESC()
+    public void EventF()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIManager.Instance.ShowUI<PauseUI>("PauseUI");
-        }
+        UIManager.Instance.GetUI<GameUI>("GameUI").ShowIncludeUI("event");
     }
 }

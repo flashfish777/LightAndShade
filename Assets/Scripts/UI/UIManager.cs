@@ -42,11 +42,9 @@ public class UIManager : MonoBehaviour
             // 添加到集合进行存储
             uiList.Add(ui);
         }
-        else
-        {
-            // 显示
-            ui.Show();
-        }
+        
+        // 显示
+        ui.Show();
 
         return ui;
     }
@@ -86,10 +84,10 @@ public class UIManager : MonoBehaviour
     // 从集合中找到名字对应的界面脚本
     public UIBase Find(string uiName)
     {
-        for (int i = 0; i < uiList.Count; ++i)
+        foreach (var t in uiList)
         {
-            if (uiList[i].name == uiName)
-                return uiList[i];
+            if (t.name == uiName)
+                return t;
         }
 
         return null;
